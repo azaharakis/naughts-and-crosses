@@ -18,7 +18,7 @@ module.exports = {
         exclude: /node_modules|bower_components/,
         loader: "babel-loader",
         query: {
-          optional: ["es7.decorators", "es7.classProperties"]
+          optional: ["es7.classProperties"]
         }
       },
       {
