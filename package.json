@@ -1,5 +1,5 @@
 {
-  "name": "example-rui-site",
+  "name": "Netflix UI",
   "version": "0.0.1",
   "scripts": {
     "dev": "webpack-dev-server --devtool eval --progress --colors --content-base ./public --hot --inline"
