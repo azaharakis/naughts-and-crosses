@@ -26,7 +26,7 @@ module.exports = React.createClass({
                 <h3 className="video__heading">{video.title}</h3>
                 <img className="video__img" src={video.img} />
                 {this.state.modificationEnabled &&
-                    <button className={`video__action ${modifyClass}`} onClick={this.props.handleAction}>
+                    <button className={`video__action ${modifyClass}`} onClick={() => this.props.handleAction(video.id)}>
                         {label}
                     </button>
                 }

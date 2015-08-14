@@ -8,6 +8,18 @@ var ViewActionCreators = {
             type: ActionTypes.LOAD_VIDEOS
         });
         APIUtils.loadVideos();
+    },
+    removeVideoFromList: (id) => {
+        AppDispatcher.handleViewAction({
+            type: ActionTypes.REMOVE_VIDEO_FROM_LIST,
+            id
+        })
+    },
+    addVideoToList: (id) => {
+        AppDispatcher.handleViewAction({
+            type: ActionTypes.ADD_VIDEO_TO_LIST,
+            id
+        })
     }
 };
 

@@ -23,7 +23,7 @@ var App = React.createClass({
     },
 
     renderCollection(collection, type, action){
-        return collection.map(video => <Video key={video.id} type={type} video={video} />);
+        return collection.map(video => <Video key={video.id} handleAction={action} type={type} video={video} />);
     },
 
     renderUI () {
@@ -32,18 +32,18 @@ var App = React.createClass({
                 <div className="video-group">
                     <h2 className="video-group__heading">My List</h2>
                     <ul className="video-group__list">
-                        {this.renderCollection(this.state.videos.usersVideos.videos, "remove")}
+                        {this.renderCollection(this.state.store.usersVideos.videos, "remove", ViewActionCreators.removeVideoFromList)}
                     </ul>
                 </div>
                 <div className="video-group">
                     <h2 className="video-group__heading">Recommendations</h2>
                     <ul className="video-group__list">
-                        {this.renderCollection(this.state.videos.recommendedVideos.videos, "add")}
+                        {this.renderCollection(this.state.store.recommendedVideos.videos, "add", ViewActionCreators.addVideoToList)}
                     </ul>
                 </div>
                 <div className="video-summary">
                     <h4 className="video-summary__heading">My list titles:</h4>
-                    {this.state.videos.usersVideos.getSummary()}
+                    {this.state.store.usersVideos.getSummary()}
                 </div>
             </div>
         )
