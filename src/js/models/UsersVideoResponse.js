@@ -1,9 +1,9 @@
-var { Video } = require('./Video');
+var { VideoCollection } = require('./VideoCollection');
 
 class UsersVideoResponse {
     constructor(data) {
-        this.usersVideos = data.mylist.map(v => new Video(v));
-        this.recommendedVideos = data.recommendations.map(v => new Video(v));
+        this.usersVideos = new VideoCollection(data.mylist);
+        this.recommendedVideos = new VideoCollection(data.recommendations);
     }
 }
 

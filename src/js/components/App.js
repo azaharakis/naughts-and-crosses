@@ -32,14 +32,18 @@ var App = React.createClass({
                 <div className="video-group">
                     <h2 className="video-group__heading">My List</h2>
                     <ul className="video-group__list">
-                        {this.renderCollection(this.state.videos.usersVideos)}
+                        {this.renderCollection(this.state.videos.usersVideos.videos)}
                     </ul>
                 </div>
                 <div className="video-group">
                     <h2 className="video-group__heading">Recommendations</h2>
                     <ul className="video-group__list">
-                        {this.renderCollection(this.state.videos.recommendedVideos)}
+                        {this.renderCollection(this.state.videos.recommendedVideos.videos)}
                     </ul>
+                </div>
+                <div className="video-summary">
+                    <h4 className="video-summary__heading">My list titles:</h4>
+                    {this.state.videos.usersVideos.getSummary()}
                 </div>
             </div>
         )
