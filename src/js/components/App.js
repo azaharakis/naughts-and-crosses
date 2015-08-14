@@ -22,8 +22,8 @@ var App = React.createClass({
         VideoStore.removeChangeListener(this.handleChange);
     },
 
-    renderCollection(collection){
-        return collection.map(video => <Video key={video.id} video={video} />);
+    renderCollection(collection, type, action){
+        return collection.map(video => <Video key={video.id} type={type} video={video} />);
     },
 
     renderUI () {
@@ -32,13 +32,13 @@ var App = React.createClass({
                 <div className="video-group">
                     <h2 className="video-group__heading">My List</h2>
                     <ul className="video-group__list">
-                        {this.renderCollection(this.state.videos.usersVideos.videos)}
+                        {this.renderCollection(this.state.videos.usersVideos.videos, "remove")}
                     </ul>
                 </div>
                 <div className="video-group">
                     <h2 className="video-group__heading">Recommendations</h2>
                     <ul className="video-group__list">
-                        {this.renderCollection(this.state.videos.recommendedVideos.videos)}
+                        {this.renderCollection(this.state.videos.recommendedVideos.videos, "add")}
                     </ul>
                 </div>
                 <div className="video-summary">

@@ -8,7 +8,24 @@
   display: inline-block;
   list-style-type: none;
   margin-left: 1em;
+  position: relative;
   &__heading{
     text-align: center;
+  }
+  &__action{
+    position: absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    border:none;
+    padding: .5em;
+    &--remove{
+      background: red;
+      color:#fff;
+    }
+    &--add{
+      background: green;
+      color:#fff;
+    }
   }
 }
