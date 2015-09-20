@@ -25,10 +25,9 @@ class Player {
 
 function generateEmptyGrid() {
     return [
-        [null, null, null, null],
-        [null, null, null, null],
-        [null, null, null, null],
-        [null, null, null, null]
+        [null, null, null],
+        [null, null, null],
+        [null, null, null]
     ];
 }
 
