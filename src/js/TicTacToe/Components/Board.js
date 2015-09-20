@@ -102,7 +102,7 @@ module.exports = React.createClass({
             winningCells: undefined
         });
     },
-    renderGrid() {
+    renderBoard() {
         return this.state.grid.map((row, rowKey) => {
             return (
                 <div key={rowKey} className="tic-tac-board__row">
@@ -138,7 +138,7 @@ module.exports = React.createClass({
                 {(this.isBoardFull() && !this.state.winner) && <span onClick={this.handleBoardReset}> There is no winner :( Play Again?</span>}
                 <br/>
                 <br/>
-                {this.renderGrid()}
+                {this.renderBoard()}
             </div>
         )
     }
