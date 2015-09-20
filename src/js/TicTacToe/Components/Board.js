@@ -32,42 +32,33 @@ module.exports = React.createClass({
         }
 
         function filterForWinner(arr) {
-            if (arr.filter((cell) => {
-                    return doesCellBelongToCurrentPlayer.call(this, cell)
-                }).length === arr.length) {
+            if (arr.filter(doesCellBelongToCurrentPlayer, this).length === arr.length) {
                 this.setState({
                     winner: this.currentPlayer,
                     winningCells: arr
                 });
             }
         }
+        //Win By Row
+        currentGrid.forEach( filterForWinner, this);
 
-        (function winByRow() {
-            currentGrid.forEach((row, index)=> {
-                filterForWinner.call(this, row)
+        //Win by Column
+        for (let i = 0; i < this.state.grid.length; i++) {
+            let column = [];
+            this.state.grid.forEach((row) => {
+                column.push(row[i]);
             });
-        }.bind(this))();
-
-        (function winByColumn() {
-            for (let i = 0; i < this.state.grid.length; i++) {
-                let column = [];
-                this.state.grid.forEach((row) => {
-                    column.push(row[i]);
-                });
-                filterForWinner.call(this, column);
-            }
-        }.bind(this))();
-
-        (function winByCrossSection() {
-            let crossSectionTopToBottom = [];
-            let crossSectionBottomToTop = [];
-            this.state.grid.forEach((row, index) => {
-                crossSectionTopToBottom.push(row[index]);
-                crossSectionBottomToTop.push(row[(row.length - 1) - index]);
-            });
-            filterForWinner.call(this, crossSectionTopToBottom);
-            filterForWinner.call(this, crossSectionBottomToTop);
-        }.bind(this))();
+            filterForWinner.call(this, column);
+        }
+        //Win by cross section
+        let crossSectionTopToBottom = [];
+        let crossSectionBottomToTop = [];
+        this.state.grid.forEach((row, index) => {
+            crossSectionTopToBottom.push(row[index]);
+            crossSectionBottomToTop.push(row[(row.length - 1) - index]);
+        });
+        filterForWinner.call(this, crossSectionTopToBottom);
+        filterForWinner.call(this, crossSectionBottomToTop);
 
     },
     isBoardFull() {
