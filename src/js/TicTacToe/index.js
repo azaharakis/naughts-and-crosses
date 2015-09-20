@@ -1,14 +1,6 @@
 var React = require('react');
 var GridItem = require('./Components/GridItem');
-
-class Player {
-    constructor({name = "No Name", marker, color}) {
-        this.name = name;
-        this.marker = marker;
-        this.color = color;
-    }
-}
-
+var Player = require('./Models/Player');
 function generateEmptyGrid() {
     return [
         [null, null, null],
