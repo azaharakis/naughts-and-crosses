@@ -6,11 +6,12 @@ module.exports = function(config) {
     ],
     frameworks: ['jasmine'],
     preprocessors: {
-      'test/tests.webpack.js': ['webpack'],
+      'test/tests.webpack.js': ['webpack','sourcemap'],
     },
     reporters: ['progress'],
     singleRun: true,
     webpack: {
+      devtool: 'inline-source-map',
       module: {
         loaders: [
           { test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader' },
