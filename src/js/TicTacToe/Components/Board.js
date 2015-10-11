@@ -3,9 +3,9 @@ var GridItem = require('./GridItem');
 
 function generateEmptyGrid() {
     return [
-        [null, null, null],
-        [null, null, null],
-        [null, null, null]
+        [undefined, undefined, undefined],
+        [undefined, undefined, undefined],
+        [undefined, undefined, undefined]
     ];
 }
 
@@ -25,7 +25,7 @@ module.exports = React.createClass({
     },
 
     canGridBeSet(pos) {
-        return (this.state.grid[pos[0]][pos[1]] === null && !this.state.winner) ? true : false;
+        return (!this.state.grid[pos[0]][pos[1]]  && !this.state.winner) ? true : false;
     },
     doWeHaveAWinner() {
         let currentGrid = this.state.grid;
@@ -78,7 +78,7 @@ module.exports = React.createClass({
         if (this.canGridBeSet(pos)) {
             var newGrid = this.state.grid;
             newGrid[pos[0]][pos[1]] = {
-                BelongsToPlayer: this.currentPlayer,
+                player: this.currentPlayer,
                 pos: pos
             };
             this.setState({
@@ -88,9 +88,7 @@ module.exports = React.createClass({
             this.setCurrentPlayer();
         }
     },
-    handlePlayerTurn(pos) {
-        this.setPlayersMove(pos);
-    },
+
     handleBoardReset() {
         this.setState({
             grid: generateEmptyGrid(),
@@ -108,7 +106,7 @@ module.exports = React.createClass({
 
                         let displayColor = false;
 
-                        let player = (cell) ? cell.BelongsToPlayer : null;
+                        let player = (cell) ? cell.player : undefined;
                         if (this.state.winningCells) {
                             this.state.winningCells.forEach((cell) => {
                                 if (rowKey === cell.pos[0] && itemKey === cell.pos[1]) {
@@ -118,8 +116,8 @@ module.exports = React.createClass({
                         }
 
                         return (
-                            <GridItem {...player} displayColor={displayColor} handleClick={this.handlePlayerTurn.bind(this, [rowKey, itemKey])} key={`${itemKey}-${rowKey}`} >
-                                {cell && cell.BelongsToPlayer.marker}&nbsp;
+                            <GridItem {...player} displayColor={displayColor} handleClick={this.setPlayersMove.bind(this, [rowKey, itemKey])} key={`${itemKey}-${rowKey}`} >
+                                {cell && cell.player.marker}&nbsp;
                             </GridItem>
                         );
                     })}
