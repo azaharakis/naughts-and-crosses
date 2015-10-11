@@ -15,12 +15,15 @@ module.exports = React.createClass({
             grid: generateEmptyGrid()
         }
     },
+
     componentWillMount() {
         this.setCurrentPlayer();
     },
+
     setCurrentPlayer() {
         this.currentPlayer = (this.currentPlayer && this.currentPlayer.marker === this.props.player1.marker) ? this.props.player2 : this.props.player1;
     },
+
     canGridBeSet(pos) {
         return (this.state.grid[pos[0]][pos[1]] === null && !this.state.winner) ? true : false;
     },
@@ -39,6 +42,7 @@ module.exports = React.createClass({
                 });
             }
         }
+
         //Win By Row
         currentGrid.forEach( filterForWinner, this);
 
@@ -61,6 +65,7 @@ module.exports = React.createClass({
         filterForWinner.call(this, crossSectionBottomToTop);
 
     },
+
     isBoardFull() {
         return this.state.grid.every(row=> {
             return row.every(item=> {
@@ -68,6 +73,7 @@ module.exports = React.createClass({
             });
         })
     },
+
     setPlayersMove(pos) {
         if (this.canGridBeSet(pos)) {
             var newGrid = this.state.grid;
@@ -93,6 +99,7 @@ module.exports = React.createClass({
             winningCells: undefined
         });
     },
+
     renderBoard() {
         return this.state.grid.map((row, rowKey) => {
             return (
@@ -120,6 +127,7 @@ module.exports = React.createClass({
             );
         })
     },
+
     render() {
         return (
             <div className="tic-tac-board">
