@@ -8,6 +8,48 @@ function generateEmptyGrid() {
         [undefined, undefined, undefined]
     ];
 }
+function getWinningCells(grid, currentPlayer) {
+    let currentGrid = grid;
+    let matched;
+
+    function doesCellBelongToCurrentPlayer({ player } = {}) {
+        return player === currentPlayer;
+    }
+
+    function filterForWinner(arr, key) {
+        var matchedCells = [];
+        if (arr.filter(doesCellBelongToCurrentPlayer).length === arr.length) {
+            arr.forEach( (i,k) => {
+                matchedCells.push([key,k])
+            });
+            matched = arr;
+        }
+    }
+
+    //Win By Row
+    currentGrid.forEach( filterForWinner );
+
+    //Win by Column
+    for (let i = 0; i < currentGrid.length; i++) {
+        let column = [];
+        currentGrid.forEach((row) => {
+            column.push(row[i]);
+        });
+        filterForWinner(column);
+    }
+
+    ////Win by cross section
+    let crossSectionTopToBottom = [];
+    let crossSectionBottomToTop = [];
+    currentGrid.forEach((row, index) => {
+        crossSectionTopToBottom.push(row[index]);
+        crossSectionBottomToTop.push(row[(row.length - 1) - index]);
+    });
+    filterForWinner(crossSectionTopToBottom);
+    filterForWinner(crossSectionBottomToTop);
+
+    return matched;
+}
 
 module.exports = React.createClass({
     getInitialState() {
@@ -26,44 +68,6 @@ module.exports = React.createClass({
 
     canGridBeSet(pos) {
         return (!this.state.grid[pos[0]][pos[1]]  && !this.state.winner) ? true : false;
-    },
-    doWeHaveAWinner() {
-        let currentGrid = this.state.grid;
-
-        function doesCellBelongToCurrentPlayer(cell) {
-            return (cell && cell.BelongsToPlayer.marker === this.currentPlayer.marker);
-        }
-
-        function filterForWinner(arr) {
-            if (arr.filter(doesCellBelongToCurrentPlayer, this).length === arr.length) {
-                this.setState({
-                    winner: this.currentPlayer,
-                    winningCells: arr
-                });
-            }
-        }
-
-        //Win By Row
-        currentGrid.forEach( filterForWinner, this);
-
-        //Win by Column
-        for (let i = 0; i < this.state.grid.length; i++) {
-            let column = [];
-            this.state.grid.forEach((row) => {
-                column.push(row[i]);
-            });
-            filterForWinner.call(this, column);
-        }
-        //Win by cross section
-        let crossSectionTopToBottom = [];
-        let crossSectionBottomToTop = [];
-        this.state.grid.forEach((row, index) => {
-            crossSectionTopToBottom.push(row[index]);
-            crossSectionBottomToTop.push(row[(row.length - 1) - index]);
-        });
-        filterForWinner.call(this, crossSectionTopToBottom);
-        filterForWinner.call(this, crossSectionBottomToTop);
-
     },
 
     isBoardFull() {
@@ -84,7 +88,13 @@ module.exports = React.createClass({
             this.setState({
                 grid: newGrid
             });
-            this.doWeHaveAWinner();
+            var winningCells = getWinningCells(this.state.grid, this.currentPlayer);
+            if(winningCells){
+                this.setState({
+                    winner: this.currentPlayer,
+                    winningCells
+                });
+            }
             this.setCurrentPlayer();
         }
     },
