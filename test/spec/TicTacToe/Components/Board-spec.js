@@ -23,12 +23,13 @@ describe('Board', () => {
     });
 
     describe('win by row', function() {
+
         it('top', function(){
             Component.setPlayersMove([0,0]);
+            Component.setPlayersMove([1,1]);
             Component.setPlayersMove([1,0]);
-            Component.setPlayersMove([0,1]);
+            Component.setPlayersMove([2,1]);
             Component.setPlayersMove([2,0]);
-            Component.setPlayersMove([0,2]);
             expect(Component.state.winner).toBe(players.player1);
         });
 

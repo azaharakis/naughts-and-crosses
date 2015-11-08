@@ -79,9 +79,11 @@ module.exports = React.createClass({
     },
 
     setPlayersMove(pos) {
+        let x = pos[0];
+        let y = pos[1];
         if (this.canGridBeSet(pos)) {
             var newGrid = this.state.grid;
-            newGrid[pos[0]][pos[1]] = {
+            newGrid[x][y] = {
                 player: this.currentPlayer,
                 pos: pos
             };
@@ -109,24 +111,24 @@ module.exports = React.createClass({
     },
 
     renderBoard() {
-        return this.state.grid.map((row, rowKey) => {
+        return this.state.grid.map((row, x) => {
             return (
-                <div key={rowKey} className="tic-tac-board__row">
-                    {row.map((cell, itemKey) => {
+                <div key={x} classname="tic-tac-board__row">
+                    {row.map((cell, y) => {
 
                         let displayColor = false;
 
                         let player = (cell) ? cell.player : undefined;
                         if (this.state.winningCells) {
                             this.state.winningCells.forEach((cell) => {
-                                if (rowKey === cell.pos[0] && itemKey === cell.pos[1]) {
+                                if (x === cell.pos[0] && y === cell.pos[1]) {
                                     displayColor = true;
                                 }
                             })
                         }
 
                         return (
-                            <GridItem {...player} displayColor={displayColor} handleClick={this.setPlayersMove.bind(this, [rowKey, itemKey])} key={`${itemKey}-${rowKey}`} >
+                            <GridItem {...player} displayColor={displayColor} handleClick={this.setPlayersMove.bind(this, [x, y])} key={`${y}-${x}`} >
                                 {cell && cell.player.marker}&nbsp;
                             </GridItem>
                         );
