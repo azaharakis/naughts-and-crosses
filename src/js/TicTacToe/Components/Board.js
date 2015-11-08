@@ -113,7 +113,7 @@ module.exports = React.createClass({
     renderBoard() {
         return this.state.grid.map((row, x) => {
             return (
-                <div key={x} classname="tic-tac-board__row">
+                <div key={x} className="tic-tac-board__row">
                     {row.map((cell, y) => {
 
                         let displayColor = false;
