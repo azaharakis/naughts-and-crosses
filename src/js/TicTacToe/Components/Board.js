@@ -12,9 +12,7 @@ function getWinningCells(grid, currentPlayer) {
     let currentGrid = grid;
     let matched;
 
-    function doesCellBelongToCurrentPlayer({ player } = {}) {
-        return player === currentPlayer;
-    }
+    let doesCellBelongToCurrentPlayer = ({ player } = {}) => player === currentPlayer;
 
     function filterForWinner(arr, key) {
         var matchedCells = [];
