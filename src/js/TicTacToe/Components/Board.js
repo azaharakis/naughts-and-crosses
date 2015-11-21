@@ -1,4 +1,5 @@
 var React = require('react');
+var _ = require('lodash');
 var GridItem = require('./GridItem');
 
 function generateEmptyGrid() {
@@ -15,39 +16,25 @@ function getWinningCells(grid, currentPlayer) {
 
     let doesCellBelongToCurrentPlayer = ({ player } = {}) => player === currentPlayer;
 
-    function filterForWinner(arr, key) {
-        var matchedCells = [];
-        if (arr.filter(doesCellBelongToCurrentPlayer).length === arr.length) {
-            arr.forEach( (i,k) => {
-                matchedCells.push([key,k])
-            });
-            matched = arr;
-        }
+    let doWeHaveWinningCells = rowOfCells => {
+        return rowOfCells.filter(doesCellBelongToCurrentPlayer).length === rowOfCells.length;
     }
 
-    //Win By Row
-    currentGrid.forEach( filterForWinner );
-
-    //Win by Column
-    for (let i = 0; i < currentGrid.length; i++) {
-        let column = [];
-        currentGrid.forEach((row) => {
-            column.push(row[i]);
-        });
-        filterForWinner(column);
+    let pluckWinningCells = potentialWinningRow => {
+        return _.find(potentialWinningRow, doWeHaveWinningCells );
     }
 
-    ////Win by cross section
-    let crossSectionTopToBottom = [];
-    let crossSectionBottomToTop = [];
-    currentGrid.forEach((row, index) => {
-        crossSectionTopToBottom.push(row[index]);
-        crossSectionBottomToTop.push(row[(row.length - 1) - index]);
-    });
-    filterForWinner(crossSectionTopToBottom);
-    filterForWinner(crossSectionBottomToTop);
-
-    return matched;
+    let winningCombinations = [
+        //Win By Row
+        currentGrid,
+        //Win by Column
+        currentGrid.map( (_, key) => currentGrid.map( col => col[key] ) ),
+        //Win by cross section top to bottom
+        [ currentGrid.map( (row, key) => row[key] ) ],
+        //Win by cross section bottom to top
+        [ currentGrid.map( (row, key) => row[(row.length - 1) - key] ) ]
+    ];
+    return _.compact(winningCombinations.map(pluckWinningCells))[0];
 }
 
 module.exports = React.createClass({
