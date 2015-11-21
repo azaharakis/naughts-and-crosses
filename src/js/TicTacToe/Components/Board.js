@@ -11,7 +11,6 @@ function generateEmptyGrid() {
 }
 
 function getWinningCells(grid, currentPlayer) {
-    let matched;
 
     let doesCellBelongToCurrentPlayer = ({ player } = {}) => player === currentPlayer;
 
