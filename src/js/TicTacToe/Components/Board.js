@@ -11,7 +11,6 @@ function generateEmptyGrid() {
 }
 
 function getWinningCells(grid, currentPlayer) {
-    let currentGrid = grid;
     let matched;
 
     let doesCellBelongToCurrentPlayer = ({ player } = {}) => player === currentPlayer;
@@ -26,13 +25,13 @@ function getWinningCells(grid, currentPlayer) {
 
     let winningCombinations = [
         //Win By Row
-        currentGrid,
+        grid,
         //Win by Column
-        currentGrid.map( (_, key) => currentGrid.map( col => col[key] ) ),
+        grid.map( (_, key) => grid.map( col => col[key] ) ),
         //Win by cross section top to bottom
-        [ currentGrid.map( (row, key) => row[key] ) ],
+        [ grid.map( (row, key) => row[key] ) ],
         //Win by cross section bottom to top
-        [ currentGrid.map( (row, key) => row[(row.length - 1) - key] ) ]
+        [ grid.map( (row, key) => row[(row.length - 1) - key] ) ]
     ];
     return _.compact(winningCombinations.map(pluckWinningCells))[0];
 }
