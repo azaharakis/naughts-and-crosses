@@ -8,6 +8,7 @@ function generateEmptyGrid() {
         [undefined, undefined, undefined]
     ];
 }
+
 function getWinningCells(grid, currentPlayer) {
     let currentGrid = grid;
     let matched;
