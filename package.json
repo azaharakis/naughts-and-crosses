@@ -2,7 +2,7 @@
   "name": "example-rui-site",
   "version": "0.0.1",
   "scripts": {
-    "dev": "webpack-dev-server --devtool eval --progress --colors --content-base ./public --hot --inline",
+    "dev": "webpack-dev-server --devtool source-maps --progress --colors --content-base ./public --hot --inline",
     "test": "karma start --single-run=false"
   },
   "dependencies": {
