@@ -1,5 +1,4 @@
 var React = require('react');
-var _ = require('lodash');
 var GridItem = require('./GridItem');
 
 function generateEmptyGrid() {
@@ -12,27 +11,30 @@ function generateEmptyGrid() {
 
 function getWinningCells(grid, currentPlayer) {
 
-    let doesCellBelongToCurrentPlayer = ({ player } = {}) => player === currentPlayer;
+    const doesCellBelongToCurrentPlayer = ({ player } = {}) => player === currentPlayer;
 
-    let doWeHaveWinningCells = rowOfCells => {
-        return rowOfCells.filter(doesCellBelongToCurrentPlayer).length === rowOfCells.length;
+    const doWeHaveWinningCells = ( foundWinningCells, cells ) => {
+        return cells.filter(doesCellBelongToCurrentPlayer).length === cells.length ? cells : foundWinningCells;
     }
 
-    let pluckWinningCells = potentialWinningRow => {
-        return _.find(potentialWinningRow, doWeHaveWinningCells );
-    }
+    const doWeHaveWinningCombination = ( foundWinningCombination, combination ) => {
+        let winningCombination = combination.reduce( doWeHaveWinningCells, undefined );
+        return winningCombination ? winningCombination : foundWinningCombination;
+    };
 
-    let winningCombinations = [
-        //Win By Row
-        grid,
-        //Win by Column
-        grid.map( (_, key) => grid.map( col => col[key] ) ),
-        //Win by cross section top to bottom
-        [ grid.map( (row, key) => row[key] ) ],
-        //Win by cross section bottom to top
-        [ grid.map( (row, key) => row[(row.length - 1) - key] ) ]
+    const testByRow = grid;
+    const testByColumn = grid.map( (_, key) => grid.map( col => col[key] ) );
+    const testByDiagonalTopToBottom = [ grid.map( (row, key) => row[key] ) ];
+    const testByDiagonalBottomToTop = [ grid.map( (row, key) => row[(row.length - 1) - key] ) ]
+
+    const waysToWin = [
+        testByRow,
+        testByColumn,
+        testByDiagonalTopToBottom,
+        testByDiagonalBottomToTop
     ];
-    return _.compact(winningCombinations.map(pluckWinningCells))[0];
+
+    return waysToWin.reduce( doWeHaveWinningCombination, undefined );
 }
 
 module.exports = React.createClass({
