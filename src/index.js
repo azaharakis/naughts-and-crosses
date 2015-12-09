@@ -1,6 +1,6 @@
 require('./scss/index.scss');
-var React = require('react');
-var TicTackToe = require('./js/TicTacToe');
+const React = require('react');
+const TicTackToe = require('./js/TicTacToe');
 
 var App = React.createClass({
     render(){
