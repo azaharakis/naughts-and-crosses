@@ -1,6 +1,6 @@
-var React = require('react');
-var update = require('react-addons-update');
-var GridItem = require('./GridItem');
+const React = require('react');
+const update = require('react-addons-update');
+const GridItem = require('./GridItem');
 
 function generateEmptyGrid() {
     return [
@@ -70,16 +70,14 @@ module.exports = React.createClass({
         let y = pos[1];
         if (this.canGridBeSet(pos)) {
             let newGrid = update(this.state.grid, { [x] : { [y] : { $set: { player: this.currentPlayer, pos } } } } );
-            var winningCells = getWinningCells(newGrid, this.currentPlayer);
+            const winningCells = getWinningCells(newGrid, this.currentPlayer);
             if(winningCells){
                 this.setState({
                     winner: this.currentPlayer,
                     winningCells
                 });
             }
-            this.setState({
-                grid: newGrid
-            });
+            this.setState({ grid: newGrid });
             this.setCurrentPlayer();
         }
     },
