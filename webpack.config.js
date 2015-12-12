@@ -11,6 +11,7 @@ module.exports = {
     publicPath: "/assets/",
     filename: 'js/bundle.js'
   },
+  devtool: 'eval',
   module: {
     loaders: [
       {
