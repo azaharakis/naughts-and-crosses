@@ -1,5 +1,6 @@
 require('./scss/index.scss');
 const React = require('react');
+const ReactDOM = require('react-dom');
 const TicTackToe = require('./js/TicTacToe');
 
 var App = React.createClass({
@@ -12,4 +13,4 @@ var App = React.createClass({
     }
 });
 
-React.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));
