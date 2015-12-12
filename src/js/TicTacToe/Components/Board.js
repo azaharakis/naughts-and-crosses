@@ -1,4 +1,5 @@
 var React = require('react');
+var update = require('react-addons-update');
 var GridItem = require('./GridItem');
 
 function generateEmptyGrid() {
@@ -68,21 +69,17 @@ module.exports = React.createClass({
         let x = pos[0];
         let y = pos[1];
         if (this.canGridBeSet(pos)) {
-            var newGrid = this.state.grid;
-            newGrid[x][y] = {
-                player: this.currentPlayer,
-                pos: pos
-            };
-            this.setState({
-                grid: newGrid
-            });
-            var winningCells = getWinningCells(this.state.grid, this.currentPlayer);
+            let newGrid = update(this.state.grid, { [x] : { [y] : { $set: { player: this.currentPlayer, pos } } } } );
+            var winningCells = getWinningCells(newGrid, this.currentPlayer);
             if(winningCells){
                 this.setState({
                     winner: this.currentPlayer,
                     winningCells
                 });
             }
+            this.setState({
+                grid: newGrid
+            });
             this.setCurrentPlayer();
         }
     },
