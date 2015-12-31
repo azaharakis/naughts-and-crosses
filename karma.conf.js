@@ -1,6 +1,6 @@
 module.exports = function(config) {
   config.set({
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
     files: [
         { pattern: 'test/tests.webpack.js', watched: false },
     ],
@@ -11,7 +11,7 @@ module.exports = function(config) {
     reporters: ['progress'],
     singleRun: true,
     webpack: {
-      devtool: 'inline-source-map',
+      devtool: 'eval',
       module: {
         loaders: [
           { test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader' },
